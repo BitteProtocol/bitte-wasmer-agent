@@ -6,7 +6,6 @@ WORKDIR /app
 COPY package.json .
 COPY tsconfig.json .
 COPY bun.lockb .
-COPY .env .
 
 # Install dependencies
 RUN bun install
@@ -14,9 +13,6 @@ RUN bun install
 # Copy source files
 COPY src/ src/
 COPY index.ts .
-
-# Load environment variables from .env file
-ENV $(cat .env | xargs)
 
 # Set environment variables
 ENV NODE_ENV=production
