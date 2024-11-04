@@ -12,11 +12,13 @@ export const getConfig = (): Config => {
     console.log(process.env)
     const key = JSON.parse(process.env.BITTE_KEY || "{}");
     const config = JSON.parse(process.env.BITTE_CONFIG || "{}");
-
+    
+    console.log(key)
     if (!key?.accountId) {
         throw new Error("No account ID found in BITTE_KEY");
     }
-
+    
+    console.log(config)
     if (!config.url && !process.env.DEPLOYMENT_URL) {
         throw new Error("No URL found in BITTE_CONFIG or DEPLOYMENT_URL");
     }
