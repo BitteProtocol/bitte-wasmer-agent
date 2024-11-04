@@ -13,7 +13,6 @@ RUN bun install
 # Copy source files
 COPY src/ src/
 COPY index.ts .
-COPY .env .
 
 # Set environment variables
 ENV NODE_ENV=production
