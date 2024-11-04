@@ -15,18 +15,42 @@ const app = new Elysia()
     return pluginData();
   })
   .get("/code", async ({ query }) => {
-    console.log("Received request");
-    console.log(query);
-    // Force reload env vars on each request
-    dotenv.config({ override: true });
-    const { code } = query;
-    if (!code) {
-      return { success: false, error: "No code provided" };
+    try {
+      console.log("Received request");
+      console.log(query);
+      // Force reload env vars on each request
+      dotenv.config({ override: true });
+      
+      const { code } = query;
+      if (!code) {
+        return { success: false, error: "No code provided" };
+      }
+
+      // Decode URL-encoded code parameter
+      const decodedCode = decodeURIComponent(code);
+      const output = await runPythonWithManifest(decodedCode);
+
+      // Handle error object returned from runPythonWithManifest
+      if (typeof output === 'object' && 'error' in output) {
+        return { 
+          success: false, 
+          error: output.message 
+        };
+      }
+
+      // Handle successful string output
+      return { 
+        success: true, 
+        output 
+      };
+
+    } catch (error) {
+      console.error("Error executing code:", error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "An unknown error occurred"
+      };
     }
-    // Decode URL-encoded code parameter
-    const decodedCode = decodeURIComponent(code);
-    const output = await runPythonWithManifest(decodedCode);
-    return { success: true, output };
   })
   .listen(3000);
 
