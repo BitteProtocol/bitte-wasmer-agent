@@ -8,14 +8,26 @@ export const getWasmer = async () => {
 }
 
 export const runPythonWithManifest = async (code: string) => {
-    const wasmer = await getWasmer();
-    if (!wasmer) throw new Error("Wasmer not found");
+    try {
+        const wasmer = await getWasmer();
+        if (!wasmer) throw new Error("Wasmer not found");
 
-    const manifest: PackageManifest = createPythonManifest(code);
-    const pkg = await wasmer.createPackage(manifest);
-    const instance = await pkg.commands.myCommand.run();
-    const { stdout } = await instance.wait();
-    return stdout;
+        const manifest: PackageManifest = createPythonManifest(code);
+        const pkg = await wasmer.createPackage(manifest);
+        const instance = await pkg.commands.myCommand.run();
+        const { stdout, stderr } = await instance.wait();
+        
+        if (stderr) {
+            throw new Error(stderr);
+        }
+        
+        return stdout;
+    } catch (error) {
+        return {
+            error: true,
+            message: error instanceof Error ? error.message : "An unknown error occurred"
+        };
+    }
 }
 
 const createPythonManifest = (code: string): PackageManifest => ({

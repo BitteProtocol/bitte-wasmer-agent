@@ -27,7 +27,7 @@ export const pluginData = () => ({
         "/code": {
             get: {
                 summary: "Execute Python code",
-                operationId: "executePythonCode", 
+                operationId: "executePythonCode",
                 description: "Execute Python code",
                 parameters: [
                     {
@@ -52,7 +52,12 @@ export const pluginData = () => ({
                                             type: "boolean"
                                         },
                                         output: {
-                                            type: "string"
+                                            type: "string",
+                                            description: "The output of the code execution"
+                                        },
+                                        error: {
+                                            type: "string",
+                                            description: "Error message if execution failed"
                                         }
                                     }
                                 }
