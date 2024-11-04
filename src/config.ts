@@ -8,6 +8,8 @@ interface Config {
 }
 
 export const getConfig = (): Config => {
+
+    console.log(process.env)
     const key = JSON.parse(process.env.BITTE_KEY || "{}");
     const config = JSON.parse(process.env.BITTE_CONFIG || "{}");
 
