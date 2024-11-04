@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: bun
+    runtime: docker
+    repo: https://github.com/bitteprotocol/bitte-wasmer-agent
+    plan: starter
+    autoDeploy: false

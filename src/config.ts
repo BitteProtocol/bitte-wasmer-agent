@@ -15,12 +15,12 @@ export const getConfig = (): Config => {
         throw new Error("No account ID found in BITTE_KEY");
     }
 
-    if (!config?.url) {
-        throw new Error("No URL found in BITTE_CONFIG"); 
+    if (!config.url && !process.env.DEPLOYMENT_URL) {
+        throw new Error("No URL found in BITTE_CONFIG or DEPLOYMENT_URL");
     }
 
     return {
-        url: config.url,
+        url: config.url || process.env.DEPLOYMENT_URL,
         accountId: key.accountId
     };
 };
