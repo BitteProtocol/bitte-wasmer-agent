@@ -1,4 +1,4 @@
-FROM oven/bun
+FROM oven/bun:latest
 
 WORKDIR /app
 
@@ -16,9 +16,10 @@ COPY index.ts .
 
 # Set environment variables
 ENV NODE_ENV=production
+ENV PORT=10000
 
-# Expose the default port (assuming 3000 from the dev script)
-EXPOSE 3000
+# Expose the port used by render.com
+EXPOSE 10000
 
-# Start both the server and make-agent
-CMD ["sh", "-c", "bun run dev:server"]
+# Start the server
+CMD ["bun", "run", "prod:server"]
