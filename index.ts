@@ -26,9 +26,7 @@ const app = new Elysia()
         return { success: false, error: "No code provided" };
       }
 
-      // Decode URL-encoded code parameter
-      const decodedCode = decodeURIComponent(code);
-      const output = await runPythonWithManifest(decodedCode);
+      const output = await runPythonWithManifest(code);
 
       // Handle error object returned from runPythonWithManifest
       if (typeof output === 'object' && 'error' in output) {

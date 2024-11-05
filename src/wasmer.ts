@@ -8,6 +8,9 @@ export const getWasmer = async () => {
 }
 
 export const runPythonWithManifest = async (code: string) => {
+
+    console.log("Running Python code with manifest");
+    console.log(code);
     try {
         const wasmer = await getWasmer();
         if (!wasmer) throw new Error("Wasmer not found");
