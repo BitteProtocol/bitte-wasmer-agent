@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev:server": "bun --hot run index.ts",
+    "prod:server": "bun run index.ts",
     "dev:make-agent": "make-agent dev -p 3000"
   },
   "devDependencies": {
