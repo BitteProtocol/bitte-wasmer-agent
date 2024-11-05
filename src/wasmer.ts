@@ -13,11 +13,19 @@ export const runPythonWithManifest = async (code: string) => {
     console.log(code);
     try {
         const wasmer = await getWasmer();
+        console.log("Wasmer found");
+        console.log(wasmer);
         if (!wasmer) throw new Error("Wasmer not found");
 
         const manifest: PackageManifest = createPythonManifest(code);
+        console.log("Manifest created");
+        console.log(manifest);
         const pkg = await wasmer.createPackage(manifest);
+        console.log("Package created");
+        console.log(pkg);
         const instance = await pkg.commands.myCommand.run();
+        console.log("Instance created");
+        console.log(instance);
         const { stdout, stderr } = await instance.wait();
         
         if (stderr) {
