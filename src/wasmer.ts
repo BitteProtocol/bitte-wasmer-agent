@@ -26,14 +26,21 @@ export const runPythonWithManifest = async (code: string) => {
         const instance = await pkg.commands.myCommand.run();
         console.log("Instance created");
         console.log(instance);
+        console.log("Waiting for instance to complete...");
         const { stdout, stderr } = await instance.wait();
+        console.log("Instance completed");
+        console.log("stdout:", stdout);
+        console.log("stderr:", stderr);
         
         if (stderr) {
+            console.log("Error detected in stderr");
             throw new Error(stderr);
         }
         
+        console.log("Returning stdout");
         return stdout;
     } catch (error) {
+        console.log("Caught error:", error);
         return {
             error: true,
             message: error instanceof Error ? error.message : "An unknown error occurred"
